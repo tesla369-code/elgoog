@@ -8,6 +8,7 @@ import { BookCallDialog } from "@/components/ui/book-call-dialog";
 const navLinks = [
   { name: "Services", href: "/services" },
   { name: "Portfolio", href: "/portfolio" },
+  { name: "Team", href: "/team" },
   { name: "About", href: "/about" },
 ];
 

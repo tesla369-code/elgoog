@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import BookCallDialog from "@/components/ui/book-call-dialog";
+import { BookCallDialog } from "@/components/ui/book-call-dialog";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -26,7 +26,6 @@ const socialLinks = [
 
 const Contact = () => {
   const { toast } = useToast();
-  const [isBookCallOpen, setIsBookCallOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -261,16 +260,17 @@ const Contact = () => {
                 Quick Actions
               </h3>
               <div className="space-y-3">
-                <Button 
-                  variant="hero" 
-                  className="w-full justify-start" 
-                  size="lg"
-                  onClick={() => setIsBookCallOpen(true)}
-                >
-                  <Calendar className="w-5 h-5 mr-3" />
-                  Book a Free Strategy Call
-                  <ArrowRight className="w-4 h-4 ml-auto" />
-                </Button>
+                <BookCallDialog>
+                  <Button 
+                    variant="hero" 
+                    className="w-full justify-start" 
+                    size="lg"
+                  >
+                    <Calendar className="w-5 h-5 mr-3" />
+                    Book a Free Strategy Call
+                    <ArrowRight className="w-4 h-4 ml-auto" />
+                  </Button>
+                </BookCallDialog>
                 <Button 
                   variant="heroOutline" 
                   className="w-full justify-start" 
@@ -356,9 +356,6 @@ const Contact = () => {
           </motion.div>
         </div>
       </div>
-
-      {/* Book Call Dialog */}
-      <BookCallDialog isOpen={isBookCallOpen} onClose={() => setIsBookCallOpen(false)} />
     </section>
   );
 };

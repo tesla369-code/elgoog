@@ -1,13 +1,10 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TeamCarousel from "@/components/sections/TeamCarousel";
-import BookCallDialog from "@/components/ui/book-call-dialog";
+import { BookCallDialog } from "@/components/ui/book-call-dialog";
 
 const Hero = () => {
-  const [isBookCallOpen, setIsBookCallOpen] = useState(false);
-
   const scrollToWork = () => {
     document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -120,15 +117,16 @@ const Hero = () => {
           transition={{ duration: 0.7, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
         >
-          <Button 
-            variant="hero" 
-            size="xl" 
-            className="group"
-            onClick={() => setIsBookCallOpen(true)}
-          >
-            Book a Free Strategy Call
-            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-          </Button>
+          <BookCallDialog>
+            <Button 
+              variant="hero" 
+              size="xl" 
+              className="group"
+            >
+              Book a Free Strategy Call
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </BookCallDialog>
           <Button 
             variant="heroOutline" 
             size="xl" 
@@ -200,8 +198,6 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      {/* Book Call Dialog */}
-      <BookCallDialog isOpen={isBookCallOpen} onClose={() => setIsBookCallOpen(false)} />
     </section>
   );
 };

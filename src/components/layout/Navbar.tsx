@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { BookCallDialog } from "@/components/ui/book-call-dialog";
 
 const navLinks = [
-  { name: "Services", href: "#services" },
-  { name: "Work", href: "#work" },
-  { name: "Process", href: "#process" },
-  { name: "Team", href: "#team" },
-  { name: "About", href: "#about" },
+  { name: "Services", href: "/services" },
+  { name: "Portfolio", href: "/portfolio" },
+  { name: "About", href: "/about" },
 ];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +23,8 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const isActive = (href: string) => location.pathname === href;
 
   return (
     <motion.header
@@ -34,34 +37,40 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 group">
+        <Link to="/" className="flex items-center gap-2 group">
           <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shadow-glow">
             <span className="text-primary-foreground font-display font-bold text-xl">N</span>
           </div>
           <span className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">
             Nexora
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.name}
-              href={link.href}
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium relative group"
+              to={link.href}
+              className={`transition-colors text-sm font-medium relative group ${
+                isActive(link.href) ? "text-primary" : "text-muted-foreground hover:text-foreground"
+              }`}
             >
               {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-            </a>
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+              }`} />
+            </Link>
           ))}
         </nav>
 
         {/* CTA Button */}
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="hero" size="default">
-            Book a Call
-          </Button>
+          <BookCallDialog>
+            <Button variant="hero" size="default">
+              Book a Call
+            </Button>
+          </BookCallDialog>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -86,18 +95,22 @@ const Navbar = () => {
           >
             <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
+                  to={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-foreground hover:text-primary transition-colors text-lg font-medium py-2"
+                  className={`transition-colors text-lg font-medium py-2 ${
+                    isActive(link.href) ? "text-primary" : "text-foreground hover:text-primary"
+                  }`}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
-              <Button variant="hero" size="lg" className="mt-4 w-full">
-                Book a Call
-              </Button>
+              <BookCallDialog>
+                <Button variant="hero" size="lg" className="mt-4 w-full">
+                  Book a Call
+                </Button>
+              </BookCallDialog>
             </nav>
           </motion.div>
         )}

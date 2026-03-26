@@ -21,6 +21,12 @@ npm run build
 npm run preview
 ```
 
+## PWA Deployment
+
+This project now includes a web app manifest, service worker, install icons, and Vercel SPA rewrites so it can be deployed as a Progressive Web App.
+
+After pushing changes to GitHub, Vercel should automatically start a new deployment and publish the updated PWA build.
+
 ## Test
 
 ```sh
